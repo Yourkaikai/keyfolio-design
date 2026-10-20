@@ -1,0 +1,4 @@
+interface:
+  display_name: "Keyfolio 设计语言"
+  short_description: "复用 Keyfolio 的桌面光场、双色卡片、明暗主题与克制动效，设计新界面或精修现有组件"
+  default_prompt: "使用 $keyfolio-design，为这个界面延续 Keyfolio 的设计语言，并按当前项目的功能与平台调整。"
