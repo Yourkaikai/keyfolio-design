@@ -9,14 +9,15 @@
   <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
   <link rel="preload" href="./assets/fonts/SpaceGrotesk-Regular.ttf" as="font" type="font/ttf" crossorigin>
   <link rel="stylesheet" href="./style.css">
-  <script type="module" src="./app.js"></script>
+  <link rel="stylesheet" href="./search-light.css">
+  <script type="module" src="./app.js?v=search-light-1"></script>
 </head>
 <body>
   <a href="#main" class="skip-link">跳到内容</a>
   <div class="room" aria-hidden="true"><div class="room-lamp"></div><div class="room-color" id="room-color"></div><div class="grain"></div></div>
   <header class="site-header page-width">
     <a class="brand" href="#" aria-label="Keyfolio 设计语言首页"><span class="brand-mark">k.</span><span>Keyfolio<span class="brand-caption">设计语言</span></span></a>
-    <nav aria-label="页面导航"><a href="#light">光与物件</a><a href="#components">基础控件</a><a href="#foundations">色彩与字形</a></nav>
+    <nav aria-label="页面导航"><a href="#light">光与物件</a><a href="#search-light">搜索光效</a><a href="#components">基础控件</a><a href="#foundations">色彩与字形</a></nav>
     <button id="theme-toggle" class="theme-toggle" aria-label="切换到浅色主题"><span id="theme-icon"></span><span id="theme-label">夜间</span></button>
   </header>
 
@@ -36,8 +37,13 @@
       <div class="specimen-footnotes"><span><i class="footnote-mark" aria-hidden="true"></i>右下主光，右侧副光。文字留在安静的暗面。</span><span>六种身份，同一种秩序。</span></div>
     </section>
 
+    <section id="search-light" class="component-section" aria-labelledby="search-light-title">
+      <div class="specimen-heading"><div class="section-title"><span class="section-index">02</span><h2 id="search-light-title">搜索框，也接住一束光。</h2></div><span class="section-note">静置时微光，聚焦时亮起。</span></div>
+      <div id="search-light-demo"></div>
+    </section>
+
     <section id="components" class="component-section" aria-labelledby="components-title">
-      <div class="specimen-heading"><div class="section-title"><span class="section-index">02</span><h2 id="components-title">安静的控件，明确的回应。</h2></div><span class="section-note">悬停、按下、聚焦，都有分寸。</span></div>
+      <div class="specimen-heading"><div class="section-title"><span class="section-index">03</span><h2 id="components-title">安静的控件，明确的回应。</h2></div><span class="section-note">悬停、按下、聚焦，都有分寸。</span></div>
       <div class="component-workbench">
         <div class="form-specimen"><div class="specimen-label">输入与操作</div><label for="sample-name">卡片名称<span>聚焦时，边界亮起</span></label><input id="sample-name" value="日常创作" maxlength="32" autocomplete="off"><div class="button-line"><button id="save-sample" class="button primary">保存名称<span class="key-hint">↵</span></button><button id="cancel-sample" class="button secondary">重置</button><button class="button primary" disabled>不可用</button></div><p class="control-note" id="name-feedback">名称会保留在本页，刷新后仍可查看。</p></div>
         <div class="state-specimen"><div class="specimen-label">状态与偏好</div><div class="sample-row"><div class="row-tile" aria-hidden="true">k.</div><div class="row-copy"><strong id="saved-name">日常创作</strong><span class="mono">DEMO •••• •••• 7F2A</span></div><span class="row-status" id="row-status"><i class="status-dot"></i>已就绪</span></div><div class="status-picker" role="group" aria-label="切换演示状态"><button class="state-chip active" data-state="ready" aria-pressed="true">已就绪</button><button class="state-chip" data-state="loading" aria-pressed="false">验证中</button><button class="state-chip" data-state="error" aria-pressed="false">网络异常</button></div><div class="motion-setting"><span><strong>呼吸与微光</strong><small id="motion-note">让物件保留一点生命感</small></span><button id="motion-toggle" class="switch" role="switch" aria-checked="true" aria-label="呼吸与微光"><span></span></button></div></div>
@@ -45,7 +51,7 @@
     </section>
 
     <section id="foundations" class="foundation-section" aria-labelledby="foundations-title">
-      <div class="specimen-heading"><div class="section-title"><span class="section-index">03</span><h2 id="foundations-title">色彩有层级，字形有秩序。</h2></div><span class="section-note">把注意力，留给内容。</span></div>
+      <div class="specimen-heading"><div class="section-title"><span class="section-index">04</span><h2 id="foundations-title">色彩有层级，字形有秩序。</h2></div><span class="section-note">把注意力，留给内容。</span></div>
       <div class="foundations-grid"><div class="color-specimen"><div class="specimen-label">中性色阶<span>点击色值可复制</span></div><div id="color-swatches" class="color-swatches"></div><div class="palette-caption"><span>中性色组织界面。</span><span>身份色点亮物件。</span></div><div id="identity-strip" class="identity-strip" aria-label="厂商身份色"></div></div><div class="type-specimen"><div class="type-row"><div><span class="type-label">拉丁 · Space Grotesk</span><div class="grotesk-sample">Quietly distinct.</div></div><span class="type-weight">Aa</span></div><div class="type-row"><div><span class="type-label">中文 · PingFang SC</span><div class="chinese-sample">清晰，自有分量。</div></div><span class="type-weight chinese-letter">字</span></div><div class="type-row"><div><span class="type-label">标识 · JetBrains Mono</span><div class="mono-sample">SK–7F2A •••• B3E5</div></div><span class="type-weight mono">01</span></div></div></div>
     </section>
   </main>

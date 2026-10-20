@@ -1,0 +1,401 @@
+/* Search is a separate specimen. Its real field remains 420 × 38; the light
+   lives on cached layers outside it and never changes the layout. */
+.search-light-specimen {
+  --search-light-color: #8a8fb8;
+  --search-light-ink: var(--ink, #fff);
+  --search-light-secondary: var(--text2, #a2a2ab);
+  --search-light-muted: var(--text3, #8a8a94);
+  --search-light-line: var(--line, rgb(255 255 255 / 10%));
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+  border: 1px solid var(--search-light-line);
+  border-radius: 22px;
+  background: var(--surface, rgb(255 255 255 / 3.5%));
+  box-shadow: var(--shadow, 0 24px 60px #0003);
+  color: var(--search-light-ink);
+  font-family: 'Space Grotesk', 'PingFang SC', -apple-system, sans-serif;
+}
+
+.search-light-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 23px 28px 0;
+  color: var(--search-light-muted);
+  font-size: 10px;
+}
+
+.search-light-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 13px;
+  white-space: nowrap;
+}
+
+.search-light-dimensions {
+  padding-left: 13px;
+  border-left: 1px solid var(--search-light-line);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: .2px;
+}
+
+.search-light-source { text-align: right; }
+
+.search-light-stage {
+  position: relative;
+  padding: 38px 28px 26px;
+  min-width: 0;
+}
+
+.search-light-invitation {
+  position: relative;
+  z-index: 1;
+  margin: 0 0 34px;
+  color: var(--search-light-secondary);
+  text-align: center;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: .15px;
+}
+
+.search-light-field-wrap {
+  --search-light-pool-opacity: .55;
+  --search-light-rim-opacity: .30;
+  --search-light-pool-scale: 1;
+  position: relative;
+  isolation: isolate;
+  width: min(420px, 100%);
+  height: 38px;
+  margin-inline: auto;
+}
+
+.search-light-field-wrap:not(.search-light-is-focused):has(.search-light-field:hover) {
+  --search-light-pool-opacity: .64;
+  --search-light-rim-opacity: .42;
+}
+
+.search-light-field-wrap.search-light-is-focused {
+  --search-light-pool-opacity: .90;
+  --search-light-rim-opacity: .82;
+  --search-light-pool-scale: 1.10;
+}
+
+.search-light-pool-strength,
+.search-light-pool-breath,
+.search-light-rim-strength,
+.search-light-rim-breath,
+.search-light-rim-ignite,
+.search-light-rim-cap,
+.search-light-rim-middle {
+  position: absolute;
+  pointer-events: none;
+}
+
+.search-light-pool-strength {
+  left: -70%;
+  top: -250%;
+  width: 240%;
+  height: 600%;
+  z-index: -1;
+  opacity: var(--search-light-pool-opacity);
+  transform: scale(var(--search-light-pool-scale));
+  transition: opacity var(--state, 240ms) var(--ease-state, ease-out), transform var(--state, 240ms) var(--ease-state, ease-out);
+}
+
+.search-light-pool-breath {
+  inset: 0;
+  background-image: var(--search-light-pool-image);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+.search-light-rim-strength,
+.search-light-rim-ignite {
+  inset: -42px;
+  z-index: 2;
+  opacity: var(--search-light-rim-opacity);
+  transition: opacity var(--state, 240ms) var(--ease-state, ease-out);
+}
+
+.search-light-rim-breath { inset: 0; }
+
+.search-light-rim-cap {
+  top: 0;
+  bottom: 0;
+  width: 61px;
+  background-image: var(--search-light-rim-image);
+  background-size: 124px 122px;
+  background-repeat: no-repeat;
+}
+
+.search-light-rim-cap-start { left: 0; background-position: left center; }
+.search-light-rim-cap-end { right: 0; background-position: right center; }
+
+.search-light-rim-middle {
+  inset: 0 61px;
+  background-image: var(--search-light-rim-middle-image);
+  background-size: 2px 122px;
+  background-repeat: repeat-x;
+}
+
+.search-light-rim-ignite { opacity: 0; }
+
+.search-light-is-focused .search-light-pool-breath {
+  animation: search-light-breath 4.7s ease-in-out infinite;
+}
+
+.search-light-is-focused .search-light-rim-breath {
+  animation: search-light-breath 7.1s ease-in-out -1.3s infinite;
+}
+
+.search-light-igniting .search-light-rim-ignite {
+  animation: search-light-ignite 900ms var(--ease-state, ease-out) both;
+}
+
+.search-light-field {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  height: 38px;
+  padding: 0 17px;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 5.5%);
+  color: var(--search-light-secondary);
+  cursor: text;
+}
+
+/* Two separately painted one-pixel outlines crossfade without animating a
+   gradient. The brighter line also stays on while a query is retained. */
+.search-light-field::before,
+.search-light-field::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1px solid transparent;
+  border-radius: inherit;
+  background: linear-gradient(rgb(255 255 255 / 17%), rgb(255 255 255 / 9%) 55%, rgb(255 255 255 / 6%)) border-box;
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.search-light-field::after {
+  background: linear-gradient(rgb(255 255 255 / 85%), rgb(255 255 255 / 45%) 50%, rgb(255 255 255 / 25%)) border-box;
+  opacity: 0;
+  transition: opacity var(--state, 240ms) var(--ease-state, ease-out);
+}
+
+.search-light-is-focused .search-light-field::after,
+.search-light-has-value .search-light-field::after { opacity: 1; }
+
+.search-light-field > .search-light-icon { flex: 0 0 15px; width: 15px; height: 15px; }
+.search-light-icon { display: block; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+
+/* Explicitly override the page's ordinary 42px form input and native search
+   decorations; all chrome belongs to the capsule, not a second inner field. */
+.search-light-input,
+.search-light-input:hover,
+.search-light-input:focus,
+.search-light-input:focus-visible {
+  position: relative;
+  z-index: 3;
+  display: block;
+  flex: 1 1 0;
+  min-width: 0;
+  width: 0;
+  height: 38px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  outline: 0;
+  background: transparent;
+  box-shadow: none;
+  color: var(--search-light-ink);
+  font: 400 12px/38px 'Space Grotesk', 'PingFang SC', -apple-system, sans-serif;
+  letter-spacing: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  transition: none;
+}
+
+.search-light-input::placeholder { color: var(--search-light-muted); opacity: 1; }
+.search-light-input::-webkit-search-decoration,
+.search-light-input::-webkit-search-cancel-button,
+.search-light-input::-webkit-search-results-button,
+.search-light-input::-webkit-search-results-decoration { display: none; -webkit-appearance: none; }
+
+.search-light-shortcut {
+  flex: none;
+  color: var(--search-light-muted);
+  font: 400 10px/1.32 'JetBrains Mono', monospace;
+  white-space: nowrap;
+}
+
+.search-light-clear {
+  position: relative;
+  z-index: 4;
+  display: grid;
+  flex: 0 0 24px;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  margin-right: -4px;
+  padding: 5px;
+  border: 0;
+  border-radius: 5px;
+  background: transparent;
+  color: var(--search-light-muted);
+  transition: color var(--quick, 180ms), background var(--quick, 180ms);
+}
+
+.search-light-clear .search-light-icon { width: 13px; height: 13px; }
+.search-light-clear:hover { color: var(--search-light-ink); background: var(--chip, rgb(255 255 255 / 7.5%)); }
+.search-light-clear:focus-visible,
+.search-light-follow:focus-visible,
+.search-light-swatch:focus-visible { outline: 2px solid color-mix(in srgb, var(--search-light-ink) 65%, transparent); outline-offset: 3px; }
+
+.search-light-results {
+  position: relative;
+  z-index: 1;
+  width: min(420px, 100%);
+  margin: 39px auto 0;
+}
+
+.search-light-results-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 11px;
+  color: var(--search-light-muted);
+  font-size: 9px;
+}
+
+.search-light-result-count { font-variant-numeric: tabular-nums; }
+.search-light-result-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-content: start;
+  gap: 11px 18px;
+  min-height: 46px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.search-light-result {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  color: var(--search-light-secondary);
+  font-size: 10px;
+  line-height: 16px;
+}
+
+.search-light-result > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.search-light-result-dot { flex: 0 0 4px; width: 4px; height: 4px; border-radius: 50%; background: var(--search-light-swatch); }
+.search-light-empty { min-height: 46px; margin: 0; padding-top: 7px; color: var(--search-light-secondary); font-size: 11px; line-height: 1.6; }
+.search-light-state { position: relative; z-index: 1; min-height: 17px; margin: 23px 0 0; color: var(--search-light-muted); text-align: center; font-size: 10px; line-height: 1.7; }
+
+.search-light-palette { position: relative; z-index: 1; padding: 20px 28px 22px; border-top: 1px solid var(--search-light-line); }
+.search-light-palette-heading { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 14px; color: var(--search-light-muted); font-size: 10px; }
+.search-light-follow { display: inline-flex; align-items: center; gap: 7px; margin: -5px -3px -5px 0; padding: 5px 3px; border: 0; border-radius: 3px; background: transparent; color: var(--search-light-secondary); font: inherit; transition: color var(--quick, 180ms); }
+.search-light-follow[aria-pressed=true] { color: var(--search-light-ink); }
+.search-light-follow[aria-pressed=true] > span { opacity: .3; }
+.search-light-follow:hover { color: var(--search-light-ink); }
+.search-light-swatches { display: flex; flex-wrap: wrap; align-items: center; gap: 7px; }
+.search-light-swatch { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 30px; padding: 0 11px; border: 1px solid transparent; border-radius: 999px; background: transparent; color: var(--search-light-secondary); font-size: 10px; line-height: 1.4; transition: background var(--state, 240ms), border-color var(--state, 240ms), color var(--state, 240ms); }
+.search-light-swatch > i { display: block; flex: 0 0 7px; width: 7px; height: 7px; border-radius: 50%; background: var(--search-light-swatch); box-shadow: inset 0 0 0 1px rgb(255 255 255 / 9%); }
+.search-light-swatch:hover { background: var(--chip, rgb(255 255 255 / 7.5%)); color: var(--search-light-ink); }
+.search-light-swatch[aria-pressed=true] { border-color: var(--field-line, rgb(255 255 255 / 10%)); background: var(--chip, rgb(255 255 255 / 7.5%)); color: var(--search-light-ink); }
+
+.search-light-anatomy { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; padding: 22px 28px 25px; border-top: 1px solid var(--search-light-line); }
+.search-light-anatomy > p { display: flex; align-items: flex-start; gap: 11px; min-width: 0; margin: 0; }
+.search-light-anatomy strong { display: block; color: var(--search-light-secondary); font-size: 10px; font-weight: 500; line-height: 1.5; }
+.search-light-anatomy small { display: block; margin-top: 5px; color: var(--search-light-muted); font-size: 9px; line-height: 1.8; }
+.search-light-diagram { position: relative; display: block; flex: 0 0 32px; width: 32px; height: 19px; margin-top: 0; }
+.search-light-diagram::before { content: ''; position: absolute; inset: 5px 4px; border: 1px solid color-mix(in srgb, var(--search-light-secondary) 65%, transparent); border-radius: 999px; }
+.search-light-diagram-pool { background: radial-gradient(ellipse at center, color-mix(in srgb, var(--search-light-color) 35%, transparent), transparent 70%); }
+.search-light-diagram-rim::before { border-color: color-mix(in srgb, var(--search-light-color) 70%, var(--search-light-secondary)); box-shadow: 0 0 5px color-mix(in srgb, var(--search-light-color) 40%, transparent); }
+.search-light-diagram-focus::before { border-color: var(--search-light-secondary); box-shadow: 0 0 0 3px color-mix(in srgb, var(--search-light-color) 15%, transparent); }
+.search-light-sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+
+.search-light-specimen[data-theme=light] .search-light-field { background: #fff; box-shadow: 0 2px 6px rgb(20 20 22 / 5%); }
+.search-light-specimen[data-theme=light] .search-light-field::before { background: #dfdfe4 border-box; }
+.search-light-specimen[data-theme=light] .search-light-field::after { background: #141416 border-box; }
+.search-light-specimen[data-theme=light] .search-light-is-focused .search-light-field,
+.search-light-specimen[data-theme=light] .search-light-has-value .search-light-field { box-shadow: none; }
+
+@keyframes search-light-breath { 0%, 100% { opacity: .95; } 50% { opacity: 1; } }
+@keyframes search-light-ignite { 0% { opacity: 0; } 22% { opacity: .13; } 100% { opacity: 0; } }
+
+/* A disabled motion layer is its static completed state, never an animation
+   paused on its first transparent frame. No focus scale survives this gate. */
+.search-light-specimen[data-motion=off] .search-light-pool-strength,
+.motion-off .search-light-pool-strength { transform: none; }
+.search-light-specimen[data-motion=off] .search-light-pool-breath,
+.search-light-specimen[data-motion=off] .search-light-rim-breath,
+.motion-off .search-light-pool-breath,
+.motion-off .search-light-rim-breath { animation: none; opacity: 1; }
+.search-light-specimen[data-motion=off] .search-light-rim-ignite,
+.motion-off .search-light-rim-ignite { animation: none; opacity: 0; }
+.search-light-specimen[data-motion=off] .search-light-pool-strength,
+.search-light-specimen[data-motion=off] .search-light-rim-strength,
+.motion-off .search-light-pool-strength,
+.motion-off .search-light-rim-strength { transition-duration: 120ms; }
+.search-light-specimen[data-visible=false] .search-light-pool-breath,
+.search-light-specimen[data-visible=false] .search-light-rim-breath,
+.page-hidden .search-light-pool-breath,
+.page-hidden .search-light-rim-breath { animation-play-state: paused; }
+
+@media (max-width: 800px) {
+  .search-light-anatomy { gap: 16px; }
+  .search-light-anatomy > p { gap: 7px; }
+  .search-light-anatomy small { max-width: 17em; }
+  .search-light-swatch { padding-inline: 9px; }
+}
+
+@media (max-width: 600px) {
+  .search-light-specimen { border-radius: 18px; }
+  .search-light-toolbar { align-items: flex-start; padding: 19px 18px 0; font-size: 9px; gap: 12px; }
+  .search-light-eyebrow { gap: 9px; }
+  .search-light-dimensions { padding-left: 9px; font-size: 8px; }
+  .search-light-source { max-width: 15em; }
+  .search-light-stage { padding: 34px 22px 23px; }
+  .search-light-invitation { margin-bottom: 31px; font-size: 10px; letter-spacing: 0; }
+  .search-light-field { gap: 8px; padding-inline: 15px; }
+  .search-light-input, .search-light-input:hover, .search-light-input:focus, .search-light-input:focus-visible { font-size: 12px; }
+  .search-light-shortcut { font-size: 8px; }
+  .search-light-results { margin-top: 36px; }
+  .search-light-result-list { gap: 10px 10px; }
+  .search-light-result { gap: 6px; font-size: 9px; }
+  .search-light-state { margin-top: 20px; font-size: 9px; }
+  .search-light-palette { padding: 18px 18px 20px; }
+  .search-light-swatches { justify-content: space-between; gap: 4px; }
+  .search-light-swatch { width: 32px; height: 32px; padding: 0; }
+  .search-light-swatch > span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; }
+  .search-light-swatch > i { flex-basis: 9px; width: 9px; height: 9px; }
+  .search-light-anatomy { grid-template-columns: 1fr; gap: 14px; padding: 20px 18px 22px; }
+  .search-light-anatomy > p { align-items: center; gap: 11px; }
+  .search-light-anatomy > p > span:last-child { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  .search-light-anatomy strong { flex: none; font-size: 9px; }
+  .search-light-anatomy small { max-width: none; margin: 0; font-size: 9px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .search-light-pool-strength { transform: none; }
+  .search-light-pool-breath, .search-light-rim-breath { animation: none; opacity: 1; }
+  .search-light-rim-ignite { animation: none; opacity: 0; }
+  .search-light-pool-strength, .search-light-rim-strength { transition-duration: 120ms; }
+  .search-light-clear:active, .search-light-follow:active, .search-light-swatch:active { transform: none; }
+}

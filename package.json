@@ -2,5 +2,5 @@
   "name": "keyfolio-design",
   "private": true,
   "type": "module",
-  "scripts": { "check": "node --check docs/app.js && node --check docs/light.js", "preview": "python3 -m http.server 4832 --bind 127.0.0.1 --directory docs" }
+  "scripts": { "check": "node --check docs/app.js && node --check docs/light.js && node --check docs/search-light.js", "preview": "python3 -m http.server 4832 --bind 127.0.0.1 --directory docs" }
 }

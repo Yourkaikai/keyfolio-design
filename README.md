@@ -9,6 +9,7 @@ Keyfolio 设计语言的可交互 Web 展示页与可复用 Codex Skill：用统
 ## 可以体验什么
 
 - 统一桌面光场与 OKLab 双色卡片，悬停、选择时联动环境光。
+- [搜索光效标本](https://yourkaikai.github.io/keyfolio-design/#search-light)：宽柔光池、胶囊边缘泛光与真实聚焦呼吸，可切换灯色并输入搜索。
 - 明暗主题，以及 Space Grotesk、PingFang SC、JetBrains Mono 的排印分工。
 - 可操作的卡片详情、输入框、按钮、状态切换与色值复制。
 - 可关闭的微光动效，并响应系统 Reduce Motion 偏好。

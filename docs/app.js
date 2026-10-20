@@ -1,4 +1,5 @@
 import { PROVIDERS, getCardLight } from './light.js';
+import { mountSearchLight } from './search-light.js';
 
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
@@ -20,6 +21,7 @@ const motionQuery = matchMedia('(prefers-reduced-motion: reduce)');
 let motionPreference = storage.get('motion', 'on') !== 'off';
 const isMoving = () => motionPreference && !motionQuery.matches;
 const byId = new Map(PROVIDERS.map((p) => [p.id, p]));
+const searchDemo = mountSearchLight($('#search-light-demo'));
 const samples = {
   openai: { head: 'SK–19FA', tail: '7F2A', latency: 126, pinned: true },
   claude: { head: 'SK–72C8', tail: '8D31', latency: 183, pinned: true },
@@ -151,6 +153,7 @@ function applyLights() {
 
 function updateAmbient(force = false) {
   const id = hovered ?? selected;
+  searchDemo.setEnvironment({ theme, providerId: id, motionEnabled: isMoving() });
   const provider = byId.get(id);
   const committed = !!provider && (id === selected);
   const target = `${theme}:${id ?? 'rest'}:${committed}`;
@@ -228,6 +231,7 @@ function applyMotion() {
   button.setAttribute('aria-checked', String(isMoving()));
   button.disabled = motionQuery.matches;
   $('#motion-note').textContent = motionQuery.matches ? '系统已开启减少动态效果' : motionPreference ? '让物件保留一点生命感' : '保留静态光色，暂停呼吸与微光';
+  searchDemo.setEnvironment({ theme, providerId: hovered ?? selected, motionEnabled: isMoving() });
 }
 
 function saveName() {

@@ -34,6 +34,7 @@ description: >-
 - 配色、排印、材质参数、跨平台 token 映射：读 [foundations.md](references/foundations.md)。
 - 卡片、详情、表单、按钮、状态和响应式布局：读 [components.md](references/components.md)。
 - hover/selected 光场、动效时间、低功耗和 Reduce Motion：读 [light-and-motion.md](references/light-and-motion.md)。普通静态界面无需实现完整动态光场。
+- 搜索框的宽光池、胶囊边缘光、贴图生成、缓存与真实聚焦：读 [search-field-light.md](references/search-field-light.md)。
 
 每份参考自带来源符号。Skill 已包含可迁移的关键规则；只有需要还原 Keyfolio 的精确算法或更新本 Skill 时，才进一步读取来源代码。
 
